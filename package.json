@@ -1,0 +1,17 @@
+{
+  "name": "engine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "yarn build && node lib/tests/index.js",
+    "build": "rm -rf lib && tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^16.7.2",
+    "typescript": "^4.4.2"
+  }
+}
