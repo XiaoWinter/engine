@@ -86,6 +86,16 @@ export default class VectorImpl implements Vector {
   }
 
   lineTrans(matrix: Matrix) {
-    return new VectorImpl();
+    const changes = matrix.value.map((baseVector, index) => {
+      return baseVector.value.map((coord) => coord * this.value[index]);
+    });
+
+    let result = [];
+
+    for (let i = 0; i < this.value.length; i++) {
+      result[i] = changes.reduce((pre, cur) => (pre += cur[i]), 0);
+    }
+
+    return new VectorImpl(result);
   }
 }
