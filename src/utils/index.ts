@@ -3,11 +3,11 @@ type min = number;
 /**
  * @description: 获取数组中的最大值和最小值
  * @param {number} arr
- * @return {[max,min]} 元组返回
+ * @return {[max,min]} 元组返回最大最小值，空数组返回[0,0]
  */
 function getMaxMin(arr: number[]): [max, min] {
-  let max = arr[0];
-  let min = arr[0];
+  let max = arr[0] || 0;
+  let min = arr[0] || 0;
 
   arr.forEach((i) => {
     if (i > max) max = i;
@@ -15,6 +15,16 @@ function getMaxMin(arr: number[]): [max, min] {
   });
 
   return [max, min];
+}
+
+/**
+ * @description: 获取数组中数字最长的长度
+ * @param {number} arr
+ * @return {*}
+ */
+function getMaxWidth(arr: number[]): number {
+  const [max, min] = getMaxMin(arr);
+  return Math.max(("" + max).length, ("" + min).length);
 }
 
 /**
@@ -28,4 +38,4 @@ function tuz(coords: undefined | number): number {
   return 0;
 }
 
-export { getMaxMin, tuz };
+export { tuz, getMaxWidth };

@@ -37,6 +37,28 @@ interface Matrix {
    * |ce+dg cf+dh|
    */
   multiplication(matrix: Matrix): Matrix;
+
+  /**
+   * @description: 返回该矩阵是否为方阵
+   * @param {*}
+   * @return {*}
+   */
+  isSquare(): boolean;
+
+  /**
+   * @description: 获取矩阵原始数组
+   * @param {*}
+   * @return {*}
+   */
+  getOriginArray(): number[][];
+
+  /**
+   * @description: 获得本矩阵的方阵形式
+   * @param {*}
+   * @return {*}
+   */
+  trans2Square(): Matrix;
+
   /**
    * @description: 矩阵的行列式，二维反映线性变换对单位面积的块的影响，三维则是体积，四维？
    * @description:考虑单位基向量在矩阵变换后状态的改变

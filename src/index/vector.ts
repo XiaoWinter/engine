@@ -1,27 +1,46 @@
-import { getMaxMin, tuz } from "../utils";
+import { tuz, getMaxWidth } from "../utils";
 
 import MatrixImpl from "./matrix";
 
 export default class VectorImpl implements Vector {
   #value: number[];
+  /**
+   * @description:  向量构造函数
+   * @param {array} args
+   * @return {*}
+   * @example
+   * new VectorImpl([1,2,3])
+   * |1|
+   * |2|
+   * |3|
+   * @example
+   * new VectorImpl(1,2,3)
+   * |1|
+   * |2|
+   * |3|
+   * @example
+   * new VectorImpl()
+   * |0|
+   */
   constructor(...args: number[] | number[][]) {
-    this.#value = args.flat(Infinity) as number[];
+    if (args.length === 0) {
+      this.#value = [0];
+    } else if (args[0] instanceof Array) {
+      this.#value = args[0] as number[];
+    } else {
+      this.#value = args as number[];
+    }
   }
 
   get value() {
     return this.#value;
   }
-  private set value(value: number[]) {
-    this.#value = value;
-  }
 
   toString() {
-    const [max, min] = getMaxMin(this.value);
-
-    const maxStrLength = Math.max(("" + max).length, ("" + min).length);
+    const maxWidth = getMaxWidth(this.value);
 
     return this.value.reduce((pre, cur) => {
-      const repeatTime = maxStrLength - ("" + cur).length;
+      const repeatTime = maxWidth - ("" + cur).length;
       pre += `|${" ".repeat(repeatTime)}${cur}|\n`;
       return pre;
     }, "");
@@ -87,13 +106,13 @@ export default class VectorImpl implements Vector {
 
   lineTrans(matrix: Matrix) {
     const changes = matrix.value.map((baseVector, index) => {
-      return baseVector.value.map((coord) => coord * this.value[index]);
+      return baseVector.value.map((coord) => coord * tuz(this.value[index]));
     });
 
     let result = [];
 
     for (let i = 0; i < this.value.length; i++) {
-      result[i] = changes.reduce((pre, cur) => (pre += cur[i]), 0);
+      result[i] = changes.reduce((pre, cur) => (pre += tuz(cur[i])), 0);
     }
 
     return new VectorImpl(result);
