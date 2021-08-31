@@ -1,6 +1,6 @@
-import VectorImpl from "./vector";
+import VectorImpl from "./vector.js";
 
-import { tuz, getMaxWidth } from "../utils";
+import { tuz, getMaxWidth } from "./utils/index.js";
 
 export default class MatrixImpl implements Matrix {
   #value: Vector[];

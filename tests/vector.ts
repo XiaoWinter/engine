@@ -1,5 +1,5 @@
-import VectorImpl from "../src/index/vector";
-import MatrixImpl from "../src/index/matrix";
+import VectorImpl from "../src/vector";
+import MatrixImpl from "../src/matrix";
 import { test } from "../decorator/index";
 
 class Test {
@@ -26,6 +26,17 @@ class Test {
     console.log(v1.toString());
     console.log(v2.toString());
     console.log(v1.addition(v2).toString());
+  }
+
+  @test
+  length() {
+    const v1 = new VectorImpl(3, 4);
+    console.log(v1.toString());
+    console.log(v1.length());
+
+    const v2 = new VectorImpl(1, 1, 1);
+    console.log(v2.toString());
+    console.log(v2.length());
   }
 
   @test

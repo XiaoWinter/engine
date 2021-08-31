@@ -1,6 +1,6 @@
-import { tuz, getMaxWidth } from "../utils";
+import { tuz, getMaxWidth } from "./utils/index.js";
 
-import MatrixImpl from "./matrix";
+import MatrixImpl from "./matrix.js";
 
 export default class VectorImpl implements Vector {
   #value: number[];
@@ -44,6 +44,15 @@ export default class VectorImpl implements Vector {
       pre += `|${" ".repeat(repeatTime)}${cur}|\n`;
       return pre;
     }, "");
+  }
+
+  length() {
+    // 两点距离
+    return Math.sqrt(
+      this.value.reduce((pre, cur) => {
+        return (pre += cur ** 2);
+      }, 0),
+    );
   }
 
   addition(vector: Vector) {

@@ -52,6 +52,13 @@ interface Vector {
   dotted(vector: Vector): number;
 
   /**
+   * @description: 计算向量的模长
+   * @param {*}
+   * @return {*}
+   */
+  length(): number;
+
+  /**
    * @description: 将此向量转化成等价矩阵,转置
    * @param {*}
    * @return {*}
