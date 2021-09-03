@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "yarn build && node lib/tests/index.js",
-    "build": "rm -rf lib && tsc"
+    "build": "rm -rf lib && tsc",
+    "watch": "tsc --watch"
   },
   "keywords": [],
   "author": "",
