@@ -1,4 +1,4 @@
-import { tuz, getMaxWidth } from "./utils/index.js";
+import { tuz, getMaxWidth } from "../utils/index.js";
 
 import MatrixImpl from "./matrix.js";
 

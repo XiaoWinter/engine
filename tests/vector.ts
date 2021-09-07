@@ -1,5 +1,5 @@
-import VectorImpl from "../src/vector";
-import MatrixImpl from "../src/matrix";
+import VectorImpl from "../src/calcu/vector";
+import MatrixImpl from "../src/calcu/matrix";
 import { test } from "../decorator/index";
 
 class Test {

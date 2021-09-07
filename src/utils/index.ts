@@ -38,4 +38,16 @@ function tuz(coords: undefined | number): number {
   return 0;
 }
 
-export { tuz, getMaxWidth };
+/**
+ * @description: 处理数字为范围内最大偶数（正数）
+ * @param {number} num
+ * @return {*}
+ * @example evenfy(3) => 2
+ * @example evenfy(2) => 2
+ *
+ */
+function evenfy(num: number): number {
+  return num % 2 ? num - 1 : num;
+}
+
+export { tuz, getMaxWidth, evenfy };

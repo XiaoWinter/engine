@@ -1,4 +1,4 @@
-import MatrixImpl from "../src/matrix";
+import MatrixImpl from "../src/calcu/matrix";
 import { test } from "../decorator/index";
 
 class Test {
