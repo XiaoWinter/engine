@@ -1,5 +1,11 @@
 type Fx = (x: number) => number;
 
+type T = keyof CanvasRenderingContext2D;
+
+type CtxOptions = {
+  [K in T]?: CanvasRenderingContext2D[K];
+};
+
 /**
  * @description: 将要绘制为线的函数，通过描点绘制线
  * @param {*}
@@ -16,5 +22,6 @@ interface Line {
    */
   scale: number | null;
   draw(): void;
-  setScale(scale: number): void;
+  setScale(scale: number);
+  setCtx(options: CtxOptions);
 }

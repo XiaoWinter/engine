@@ -12,6 +12,15 @@ export default class LineImpl implements Line {
 
   setScale(scale: number) {
     this.scale = scale;
+    return this;
+  }
+
+  setCtx(options: CtxOptions) {
+    const { ctx } = this.stage;
+    if (!ctx) return;
+
+    Object.assign(ctx, options);
+    return this;
   }
 
   draw() {
@@ -30,8 +39,12 @@ export default class LineImpl implements Line {
 
     ctx.beginPath();
     for (let i = min; i < max; i++) {
-      if (i === min) ctx.moveTo(i, this.fx(i / scale));
-      ctx.lineTo(i + 1, this.fx((i + 1) / scale));
+      if (i === min) ctx.moveTo(i * scale, this.fx(i / scale));
+      const [x, y] = [i + 1, scale * this.fx((i + 1) / scale)];
+      // console.log("x", x);
+      // console.log("y", y);
+
+      ctx.lineTo(x, y);
     }
 
     ctx.stroke();
@@ -47,8 +60,11 @@ export default class LineImpl implements Line {
 
     ctx.beginPath();
     for (let i = min; i < max; i++) {
-      if (i === min) ctx.moveTo(this.fy(i / scale), i);
-      ctx.lineTo(this.fy((i + 1) / scale), i + 1);
+      if (i === min) ctx.moveTo(this.fy(i / scale), i * scale);
+      const [x, y] = [this.fy((i + 1) / scale) * scale, i + 1];
+      // console.log("x", x);
+      // console.log("y", y);
+      ctx.lineTo(x, y);
     }
     ctx.stroke();
   }
