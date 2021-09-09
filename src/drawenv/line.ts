@@ -7,7 +7,7 @@ export default class LineImpl implements Line {
     this.fx = fx;
     this.fy = fy;
     this.stage = stage;
-    this.scale = scale || stage.scale || 10;
+    this.scale = scale || stage.scale;
   }
 
   setScale(scale: number) {

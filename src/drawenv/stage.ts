@@ -8,12 +8,14 @@ type Options = {
 };
 
 export default class StageImpl implements Stage {
-  scale = 0;
+  scale = 100;
   width = 0;
   height = 0;
   value: HTMLCanvasElement | null;
+  wrapper: HTMLDivElement | null;
   ctx: CanvasRenderingContext2D | null;
   constructor(options?: Options) {
+    this.wrapper = null;
     this.value = null;
     this.ctx = null;
     options = {
@@ -21,7 +23,8 @@ export default class StageImpl implements Stage {
       id: "myCanvas",
       ...(options || {}),
     };
-    this.scale = options.scale || 10;
+    if (options.scale) this.scale = options.scale;
+    // this.scale = options.scale || 100;
     this.build(options);
   }
   build(options: Options) {
@@ -59,7 +62,9 @@ export default class StageImpl implements Stage {
       canvasElem.width = this.width;
       canvasElem.height = this.height;
 
+      this.wrapper = divWrapper;
       this.value = canvasElem;
+
       this.ctx = canvasElem.getContext("2d");
 
       if (!this.ctx) return;
@@ -67,6 +72,8 @@ export default class StageImpl implements Stage {
       this.ctx.translate(...this.center());
       // 翻转坐标系
       this.ctx.transform(1, 0, 0, -1, 0, 0);
+
+      this.wrapper?.addEventListener("wheel", this.mouseWheel);
 
       // console.log("color", this.ctx?.strokeStyle);
     }
@@ -77,5 +84,11 @@ export default class StageImpl implements Stage {
 
   setScale(scale: number) {
     this.scale = scale;
+  }
+
+  mouseWheel(e: WheelEvent) {
+    console.log(e);
+    e.preventDefault();
+    e.stopPropagation();
   }
 }
