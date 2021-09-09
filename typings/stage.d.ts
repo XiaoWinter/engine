@@ -23,4 +23,10 @@ interface Stage {
    * @return {d2Point}
    */
   center(): Center;
+  /**
+   * @description: 设置坐标系缩放比例
+   * @param {*}
+   * @return {*}
+   */
+  setScale(scale: number): void;
 }

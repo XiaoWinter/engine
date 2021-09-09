@@ -2,25 +2,21 @@
 // import VectorImpl from "./calcu/vector.js";
 import StageImpl from "./drawenv/stage.js";
 import LineImpl from "./drawenv/line.js";
+import CoordAxisImpl from "./drawenv/coordAxis.js";
 
 const stage = new StageImpl();
 
-// xy轴
-const xy = new LineImpl(
-  (x) => 0,
-  (y) => 0,
-  stage,
-);
-xy.setCtx({ fillStyle: "blue" });
-xy.draw();
+stage.setScale(100);
 
-// const er = new LineImpl((x) => x * x, null, stage);
-// er.draw();
+const coordAxis = new CoordAxisImpl(stage);
+coordAxis.build();
+
+const er = new LineImpl((x) => x * x, null, stage);
+er.draw();
 
 const sin = new LineImpl((x) => Math.sin(x), null, stage);
-sin.setScale(100);
+sin.setCtx({ strokeStyle: "red" });
 sin.draw();
 
-// const cos = new LineImpl(null, (y) => Math.cos(y), stage);
-// cos.setScale(50);
-// cos.draw();
+const cos = new LineImpl((y) => Math.cos(y), null, stage);
+cos.draw();

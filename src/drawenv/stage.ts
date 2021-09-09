@@ -1,5 +1,5 @@
 import { evenfy } from "../utils/index.js";
-
+import LineImpl from "./line.js";
 type Options = {
   size?: [number, number];
   parent?: string | Element;
@@ -67,9 +67,15 @@ export default class StageImpl implements Stage {
       this.ctx.translate(...this.center());
       // 翻转坐标系
       this.ctx.transform(1, 0, 0, -1, 0, 0);
+
+      // console.log("color", this.ctx?.strokeStyle);
     }
   }
   center(): Center {
     return [this.width / 2, this.height / 2];
+  }
+
+  setScale(scale: number) {
+    this.scale = scale;
   }
 }
