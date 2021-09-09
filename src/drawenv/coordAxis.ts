@@ -25,25 +25,36 @@ export default class coordAxisImpl extends LineImpl implements CoordAxis {
     const scale = this.scale;
     // 获取坐标范围
     const [width, height] = stage.center();
+    const [offsetX, offsetY] = stage.originOffset;
+    const [minX, maxX] = [-width + offsetX, width + offsetX];
+    const [minY, maxY] = [-height - offsetY, height - offsetY];
     // x [-width,width]
     // 绘制x
 
-    for (let i = 0; i < width; i += scale) {
-      ctx.fillRect(i - 1, 0, 2, 4);
+    for (let i = 0; i < Math.max(Math.abs(minX), Math.abs(maxX)); i += scale) {
       if (i === 0) continue;
-      ctx.fillText(i / scale + "", i, -(3 * scale) / 10);
-      ctx.fillRect(-i + 1, 0, 2, 4);
-      ctx.fillText(-i / scale + "", -i, -(3 * scale) / 10);
+      if (i < maxX) {
+        ctx.fillRect(i - 1, 0, 2, 4);
+        ctx.fillText(i / scale + "", i, -(3 * scale) / 10);
+      }
+      if (-i > minX) {
+        ctx.fillRect(-i + 1, 0, 2, 4);
+        ctx.fillText(-i / scale + "", -i, -(3 * scale) / 10);
+      }
     }
 
     // y [-height,height]
     // 绘制y
-    for (let i = 0; i < height; i += scale) {
-      ctx.fillRect(0, i - 1, 4, 2);
+    for (let i = 0; i < Math.max(Math.abs(minY), Math.abs(maxY)); i += scale) {
       if (i === 0) continue;
-      ctx.fillText(i / scale + "", -(3 * scale) / 10, i);
-      ctx.fillRect(0, -i + 1, 4, 2);
-      ctx.fillText(-i / scale + "", -(3 * scale) / 10, -i);
+      if (i < maxY) {
+        ctx.fillRect(0, i - 1, 4, 2);
+        ctx.fillText(i / scale + "", -(3 * scale) / 10, i);
+      }
+      if (-i > minY) {
+        ctx.fillRect(0, -i + 1, 4, 2);
+        ctx.fillText(-i / scale + "", -(3 * scale) / 10, -i);
+      }
     }
     return this;
   }
@@ -59,58 +70,70 @@ export default class coordAxisImpl extends LineImpl implements CoordAxis {
     const scale = this.scale;
     // 获取坐标范围
     const [width, height] = stage.center();
+    const [offsetX, offsetY] = stage.originOffset;
+    const [minX, maxX] = [-width + offsetX, width + offsetX];
+    const [minY, maxY] = [-height - offsetY, height - offsetY];
     // x [-width,width]
     // 绘制x
 
-    for (let i = 0; i < width; i += scale) {
+    for (let i = 0; i < Math.max(Math.abs(minX), Math.abs(maxX)); i += scale) {
       if (i === 0) continue;
-      new LineImpl(null, (y) => i, this.stage)
-        .setCtx({ strokeStyle: color })
-        .setScale(1)
-        .draw();
-      for (let j = 1; j < 5; j++) {
-        new LineImpl(null, (y) => i - (scale * j) / 5, this.stage)
-          .setCtx({ strokeStyle: supColor })
+      if (i < maxX) {
+        new LineImpl(null, (y) => i, this.stage)
+          .setCtx({ strokeStyle: color })
           .setScale(1)
           .draw();
+        for (let j = 1; j < 5; j++) {
+          new LineImpl(null, (y) => i - (scale * j) / 5, this.stage)
+            .setCtx({ strokeStyle: supColor })
+            .setScale(1)
+            .draw();
+        }
       }
-      new LineImpl(null, (y) => -i, this.stage)
-        .setCtx({ strokeStyle: color })
-        .setScale(1)
-        .draw();
-
-      for (let j = 1; j < 5; j++) {
-        new LineImpl(null, (y) => -i + (scale * j) / 5, this.stage)
-          .setCtx({ strokeStyle: supColor })
+      if (-i > minX) {
+        new LineImpl(null, (y) => -i, this.stage)
+          .setCtx({ strokeStyle: color })
           .setScale(1)
           .draw();
+
+        for (let j = 1; j < 5; j++) {
+          new LineImpl(null, (y) => -i + (scale * j) / 5, this.stage)
+            .setCtx({ strokeStyle: supColor })
+            .setScale(1)
+            .draw();
+        }
       }
     }
 
     // y [-height,height]
     // 绘制y
-    for (let i = 0; i < height; i += scale) {
+    for (let i = 0; i < Math.max(Math.abs(minY), Math.abs(maxY)); i += scale) {
       if (i === 0) continue;
-      new LineImpl((x) => i, null, this.stage)
-        .setCtx({ strokeStyle: color })
-        .setScale(1)
-        .draw();
-      for (let j = 1; j < 5; j++) {
-        new LineImpl((x) => i - (scale * j) / 5, null, this.stage)
-          .setCtx({ strokeStyle: supColor })
+      if (i < maxY) {
+        new LineImpl((x) => i, null, this.stage)
+          .setCtx({ strokeStyle: color })
           .setScale(1)
           .draw();
+        for (let j = 1; j < 5; j++) {
+          new LineImpl((x) => i - (scale * j) / 5, null, this.stage)
+            .setCtx({ strokeStyle: supColor })
+            .setScale(1)
+            .draw();
+        }
       }
-      new LineImpl((x) => -i, null, this.stage)
-        .setCtx({ strokeStyle: color })
-        .setScale(1)
-        .draw();
 
-      for (let j = 1; j < 5; j++) {
-        new LineImpl((x) => -i + (scale * j) / 5, null, this.stage)
-          .setCtx({ strokeStyle: supColor })
+      if (-i > minY) {
+        new LineImpl((x) => -i, null, this.stage)
+          .setCtx({ strokeStyle: color })
           .setScale(1)
           .draw();
+
+        for (let j = 1; j < 5; j++) {
+          new LineImpl((x) => -i + (scale * j) / 5, null, this.stage)
+            .setCtx({ strokeStyle: supColor })
+            .setScale(1)
+            .draw();
+        }
       }
     }
     return this;

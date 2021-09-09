@@ -35,8 +35,9 @@ export default class LineImpl implements Line {
     const scale = this.scale;
 
     const [width, height] = this.stage.center();
-    const min = -width;
-    const max = width;
+    const [offsetX, offsetY] = this.stage.originOffset;
+    const min = -width + offsetX;
+    const max = width + offsetX;
     if (!ctx || !this.fx) return;
 
     ctx.beginPath();
@@ -53,8 +54,9 @@ export default class LineImpl implements Line {
     const ctx = this.stage.ctx;
     const scale = this.scale;
     const [width, height] = this.stage.center();
-    const min = -height;
-    const max = height;
+    const [offsetX, offsetY] = this.stage.originOffset;
+    const min = -height - offsetY;
+    const max = height - offsetY;
     if (!ctx || !this.fy) return;
 
     ctx.beginPath();

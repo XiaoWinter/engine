@@ -11,6 +11,7 @@ export default class StageImpl implements Stage {
   scale = 100;
   width = 0;
   height = 0;
+  originOffset = [0, 0];
   value: HTMLCanvasElement | null;
   wrapper: HTMLDivElement | null;
   ctx: CanvasRenderingContext2D | null;
@@ -69,7 +70,10 @@ export default class StageImpl implements Stage {
 
       if (!this.ctx) return;
       // 调整坐标系，从原点左上角移到中间
-      this.ctx.translate(...this.center());
+      // this.ctx.translate(...this.center());
+      this.ctx.translate(400, 400);
+      const [width, height] = this.center();
+      this.originOffset = [width - 400, height - 400];
       // 翻转坐标系
       this.ctx.transform(1, 0, 0, -1, 0, 0);
 

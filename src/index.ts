@@ -14,10 +14,10 @@ coordAxis.build();
 // const er = new LineImpl((x) => x * x, null, stage);
 // er.draw();
 
-// // sin
-// const sin = new LineImpl((x) => Math.sin(x), null, stage);
-// sin.setCtx({ strokeStyle: "red" });
-// sin.draw();
+// sin
+const sin = new LineImpl((x) => Math.sin(x), null, stage);
+sin.setCtx({ strokeStyle: "red" });
+sin.draw();
 
 // // cos
 // const cos = new LineImpl((y) => Math.cos(y), null, stage);

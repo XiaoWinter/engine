@@ -23,10 +23,15 @@ interface Stage {
   // 缩放尺度
   scale: number;
   /**
-   * @description: 中心点
+   * @member 原点与画布中新的偏移
+   */
+  originOffset: number[];
+  /**
+   * @description: 画布的中心点
    * @return {d2Point}
    */
   center(): Center;
+
   /**
    * @description: 设置坐标系缩放比例
    * @param {*}
