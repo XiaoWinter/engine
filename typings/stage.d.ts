@@ -1,10 +1,14 @@
 type Center = [number, number];
+type Observer = CoordAxis | Line;
 /**
  * @description: canvas舞台,规定了canvas的创建,构造出一个居中的，笛卡尔的坐标系
  * @param {*}
  * @return {*}
  */
 interface Stage {
+  // 观察stage的scale变化，而重新渲染
+  observers: Observer[];
+
   /**
    * @member 画布宽度取整数偶数
    */
@@ -40,9 +44,16 @@ interface Stage {
   setScale(scale: number): void;
 
   /**
-   * @description: 鼠标滚轮改变scale
+   * @description: 添加观察者
    * @param {*}
    * @return {*}
    */
-  mouseWheel(e: WheelEvent): void;
+  addObserver(line: Line | CoordAxis);
+
+  /**
+   * @description: 通知观察者
+   * @param {*}
+   * @return {*}
+   */
+  notifyAll();
 }

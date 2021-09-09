@@ -30,12 +30,7 @@ interface Line {
    */
   fy: Fx | null;
   stage: Stage | null;
-  /**
-   * @description: 缩放
-   * @param {*}
-   * @return {*}
-   */
-  scale: number | null;
+
   /**
    * @description: 绘制
    * @param {*}

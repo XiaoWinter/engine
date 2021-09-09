@@ -1,5 +1,6 @@
 import { evenfy } from "../utils/index.js";
 import LineImpl from "./line.js";
+import CoordAxisImpl from "./coordAxis.js";
 type Options = {
   size?: [number, number];
   parent?: string | Element;
@@ -10,8 +11,9 @@ type Options = {
 export default class StageImpl implements Stage {
   scale = 100;
   width = 0;
+  observers: Observer[] = [];
   height = 0;
-  originOffset = [0, 0];
+  _originOffset = [0, 0];
   value: HTMLCanvasElement | null;
   wrapper: HTMLDivElement | null;
   ctx: CanvasRenderingContext2D | null;
@@ -27,6 +29,17 @@ export default class StageImpl implements Stage {
     if (options.scale) this.scale = options.scale;
     // this.scale = options.scale || 100;
     this.build(options);
+  }
+
+  get originOffset() {
+    return this._originOffset;
+  }
+  set originOffset(value: number[]) {
+    this._originOffset = value;
+    const [offsetX, offsetY] = value;
+    const [oldOffsetX, oldOffsetY] = this._originOffset;
+
+    this.ctx?.translate(offsetX, offsetY);
   }
   build(options: Options) {
     const { size, parent, id } = options;
@@ -70,16 +83,9 @@ export default class StageImpl implements Stage {
 
       if (!this.ctx) return;
       // 调整坐标系，从原点左上角移到中间
-      // this.ctx.translate(...this.center());
-      this.ctx.translate(400, 400);
-      const [width, height] = this.center();
-      this.originOffset = [width - 400, height - 400];
+      this.ctx.translate(...this.center());
       // 翻转坐标系
       this.ctx.transform(1, 0, 0, -1, 0, 0);
-
-      this.wrapper?.addEventListener("wheel", this.mouseWheel);
-
-      // console.log("color", this.ctx?.strokeStyle);
     }
   }
   center(): Center {
@@ -89,10 +95,28 @@ export default class StageImpl implements Stage {
   setScale(scale: number) {
     this.scale = scale;
   }
+  addObserver(line: Line | CoordAxis) {
+    if (this.observers.find((l) => l === line)) return this;
+    this.observers.push(line);
+  }
 
-  mouseWheel(e: WheelEvent) {
-    console.log(e);
-    e.preventDefault();
-    e.stopPropagation();
+  notifyAll() {
+    // const [width, height] = this.center();
+    // const [offsetX, offsetY] = this.originOffset;
+    // this.ctx?.clearRect(-width, -height, this.width, this.height);
+    // this.ctx?.clearRect(
+    //   -(width - offsetX) - 20,
+    //   -(height + offsetY) - 20,
+    //   this.width + 40,
+    //   this.height + 40,
+    // );
+
+    this.observers.forEach((l) => {
+      if (l instanceof CoordAxisImpl) {
+        l.build();
+      } else {
+        // l.draw();
+      }
+    });
   }
 }

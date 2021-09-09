@@ -8,21 +8,20 @@
 import LineImpl from "./line.js";
 
 export default class coordAxisImpl extends LineImpl implements CoordAxis {
-  constructor(stage: Stage, scale?: number) {
+  constructor(stage: Stage) {
     //   确定两线
     const fx = (x: number) => 0;
     const fy = (y: number) => 0;
-    super(fx, fy, stage, scale);
+    super(fx, fy, stage);
   }
   generateRuling() {
     //   确定刻度
     // 获取舞台
     const stage = this.stage;
     // 获取上下文
-    const { ctx } = stage;
-    if (!ctx) return this;
     // 获取缩放比例
-    const scale = this.scale;
+    const { ctx, scale } = stage;
+    if (!ctx) return this;
     // 获取坐标范围
     const [width, height] = stage.center();
     const [offsetX, offsetY] = stage.originOffset;
@@ -64,42 +63,41 @@ export default class coordAxisImpl extends LineImpl implements CoordAxis {
     const color = "#ddd";
     const supColor = "#eee";
     // 获取上下文
-    const { ctx } = stage;
-    if (!ctx) return this;
     // 获取缩放比例
-    const scale = this.scale;
+    const { ctx, scale } = stage;
+    if (!ctx) return this;
     // 获取坐标范围
     const [width, height] = stage.center();
     const [offsetX, offsetY] = stage.originOffset;
-    const [minX, maxX] = [-width + offsetX, width + offsetX];
-    const [minY, maxY] = [-height - offsetY, height - offsetY];
+    const [minX, maxX] = [-width + offsetX, width + offsetX].map((i) =>
+      parseInt("" + i / scale),
+    );
+    const [minY, maxY] = [-height - offsetY, height - offsetY].map((i) =>
+      parseInt("" + i / scale),
+    );
     // x [-width,width]
     // 绘制x
 
-    for (let i = 0; i < Math.max(Math.abs(minX), Math.abs(maxX)); i += scale) {
+    for (let i = 0; i < Math.max(Math.abs(minX), Math.abs(maxX)); i++) {
       if (i === 0) continue;
       if (i < maxX) {
         new LineImpl(null, (y) => i, this.stage)
           .setCtx({ strokeStyle: color })
-          .setScale(1)
           .draw();
         for (let j = 1; j < 5; j++) {
-          new LineImpl(null, (y) => i - (scale * j) / 5, this.stage)
+          new LineImpl(null, (y) => i - j / 5, this.stage)
             .setCtx({ strokeStyle: supColor })
-            .setScale(1)
             .draw();
         }
       }
       if (-i > minX) {
         new LineImpl(null, (y) => -i, this.stage)
           .setCtx({ strokeStyle: color })
-          .setScale(1)
           .draw();
 
         for (let j = 1; j < 5; j++) {
-          new LineImpl(null, (y) => -i + (scale * j) / 5, this.stage)
+          new LineImpl(null, (y) => -i + j / 5, this.stage)
             .setCtx({ strokeStyle: supColor })
-            .setScale(1)
             .draw();
         }
       }
@@ -107,17 +105,15 @@ export default class coordAxisImpl extends LineImpl implements CoordAxis {
 
     // y [-height,height]
     // 绘制y
-    for (let i = 0; i < Math.max(Math.abs(minY), Math.abs(maxY)); i += scale) {
+    for (let i = 0; i < Math.max(Math.abs(minY), Math.abs(maxY)); i++) {
       if (i === 0) continue;
       if (i < maxY) {
         new LineImpl((x) => i, null, this.stage)
           .setCtx({ strokeStyle: color })
-          .setScale(1)
           .draw();
         for (let j = 1; j < 5; j++) {
-          new LineImpl((x) => i - (scale * j) / 5, null, this.stage)
+          new LineImpl((x) => i - j / 5, null, this.stage)
             .setCtx({ strokeStyle: supColor })
-            .setScale(1)
             .draw();
         }
       }
@@ -125,13 +121,11 @@ export default class coordAxisImpl extends LineImpl implements CoordAxis {
       if (-i > minY) {
         new LineImpl((x) => -i, null, this.stage)
           .setCtx({ strokeStyle: color })
-          .setScale(1)
           .draw();
 
         for (let j = 1; j < 5; j++) {
-          new LineImpl((x) => -i + (scale * j) / 5, null, this.stage)
+          new LineImpl((x) => -i + j / 5, null, this.stage)
             .setCtx({ strokeStyle: supColor })
-            .setScale(1)
             .draw();
         }
       }
@@ -145,6 +139,9 @@ export default class coordAxisImpl extends LineImpl implements CoordAxis {
   }
   build() {
     this.setCtx({ strokeStyle: "blue" });
-    this.generateAxis().generateGrid().generateRuling();
+    this.generateAxis();
+    // this.generateRuling();
+    //
+    // this.generateGrid();
   }
 }

@@ -2,16 +2,15 @@ export default class LineImpl implements Line {
   fx;
   fy;
   stage;
-  scale;
-  constructor(fx: Fx | null, fy: Fx | null, stage: Stage, scale?: number) {
+  constructor(fx: Fx | null, fy: Fx | null, stage: Stage) {
     this.fx = fx;
     this.fy = fy;
     this.stage = stage;
-    this.scale = scale || stage.scale;
+    this.stage.addObserver(this);
   }
 
   setScale(scale: number) {
-    this.scale = scale;
+    this.stage.scale = scale;
     return this;
   }
 
@@ -30,10 +29,7 @@ export default class LineImpl implements Line {
   }
 
   drawX() {
-    const ctx = this.stage.ctx;
-
-    const scale = this.scale;
-
+    const { ctx, scale } = this.stage;
     const [width, height] = this.stage.center();
     const [offsetX, offsetY] = this.stage.originOffset;
     const min = -width + offsetX;
@@ -51,8 +47,7 @@ export default class LineImpl implements Line {
   }
 
   drawY() {
-    const ctx = this.stage.ctx;
-    const scale = this.scale;
+    const { ctx, scale } = this.stage;
     const [width, height] = this.stage.center();
     const [offsetX, offsetY] = this.stage.originOffset;
     const min = -height - offsetY;
