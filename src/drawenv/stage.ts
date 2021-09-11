@@ -1,6 +1,6 @@
 import { evenfy } from "../utils/index.js";
-import LineImpl from "./line.js";
 import CoordAxisImpl from "./coordAxis.js";
+import VectorImpl from "../calcu/vector.js";
 type Options = {
   size?: [number, number];
   parent?: string | Element;
@@ -13,7 +13,9 @@ export default class StageImpl implements Stage {
   width = 0;
   observers: Observer[] = [];
   height = 0;
-  _originOffset = [0, 0];
+  _originOffset: Vector;
+  // originOffset = [100, 100]
+  // 原点偏移位置，按照标准坐标系
   value: HTMLCanvasElement | null;
   wrapper: HTMLDivElement | null;
   ctx: CanvasRenderingContext2D | null;
@@ -21,10 +23,11 @@ export default class StageImpl implements Stage {
     this.wrapper = null;
     this.value = null;
     this.ctx = null;
+    this._originOffset = new VectorImpl([0, 0]);
     options = {
       parent: document.body,
       id: "myCanvas",
-      ...(options || {}),
+      ...(options || {})
     };
     if (options.scale) this.scale = options.scale;
     // this.scale = options.scale || 100;
@@ -34,12 +37,10 @@ export default class StageImpl implements Stage {
   get originOffset() {
     return this._originOffset;
   }
-  set originOffset(value: number[]) {
-    this._originOffset = value;
-    const [offsetX, offsetY] = value;
-    const [oldOffsetX, oldOffsetY] = this._originOffset;
-
-    this.ctx?.translate(offsetX, offsetY);
+  set originOffset(vector: Vector) {
+    const [x, y] = vector.subtraction(this._originOffset).value;
+    this.ctx?.translate(x * this.scale, y * this.scale);
+    this._originOffset = vector;
   }
   build(options: Options) {
     const { size, parent, id } = options;
@@ -56,6 +57,8 @@ export default class StageImpl implements Stage {
       this.width = evenfy(window.screen.availWidth - 100);
       this.height = evenfy(window.screen.availHeight - 100);
     }
+    // console.log("width", this.width)
+    // console.log("height", this.height)
 
     // 父元素;
     let parentEle;
@@ -99,23 +102,30 @@ export default class StageImpl implements Stage {
     if (this.observers.find((l) => l === line)) return this;
     this.observers.push(line);
   }
+  clear() {
+    // 获得初始画布尺寸
+    const [width, height] = this.center();
+    // 构造初始左下指向向量 原点->左下
+    const Lt = new VectorImpl(-width, -height);
+    // 获取坐标系偏移，去除缩放
+    const offset = this.originOffset.multiplication(this.scale);
+    // 获得当前左下指向向量,坐标
+    const [x, y] = Lt.subtraction(offset).value;
+    // console.log(x, ":", y)
+    // console.log(offset.toString())
+
+    // 清除
+    this.ctx?.clearRect(x, y, 2 * width, 2 * height);
+    // this.ctx?.fillRect(x, y, 2 * width, 2 * height)
+  }
 
   notifyAll() {
-    // const [width, height] = this.center();
-    // const [offsetX, offsetY] = this.originOffset;
-    // this.ctx?.clearRect(-width, -height, this.width, this.height);
-    // this.ctx?.clearRect(
-    //   -(width - offsetX) - 20,
-    //   -(height + offsetY) - 20,
-    //   this.width + 40,
-    //   this.height + 40,
-    // );
-
+    this.clear();
     this.observers.forEach((l) => {
       if (l instanceof CoordAxisImpl) {
         l.build();
       } else {
-        // l.draw();
+        l.draw();
       }
     });
   }

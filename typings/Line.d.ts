@@ -1,6 +1,14 @@
+/*
+ * @Author: XiaoWinter
+ * @Date: 2021-09-08 19:41:27
+ * @LastEditTime: 2021-09-11 12:21:33
+ * @LastEditors: your name
+ * @Description:线 的接口定义
+ * @FilePath: \engine\typings\Line.d.ts
+ */
 type Fx = (x: number) => number;
 
-type T = keyof CanvasRenderingContext2D;
+type ctxOptionsKeys = keyof CanvasRenderingContext2D;
 
 /**
  * @description: 绘图上下文的属性
@@ -8,7 +16,7 @@ type T = keyof CanvasRenderingContext2D;
  * @return {*}
  */
 type CtxOptions = {
-  [K in T]?: CanvasRenderingContext2D[K];
+  [K in ctxOptionsKeys]?: CanvasRenderingContext2D[K];
 };
 
 /**
@@ -30,6 +38,7 @@ interface Line {
    */
   fy: Fx | null;
   stage: Stage | null;
+  ctxOptions: CtxOptions | Object;
 
   /**
    * @description: 绘制
@@ -42,6 +51,8 @@ interface Line {
    * @param {*}
    * @return {*}
    */
+  drawX(): void;
+  drawY(): void;
   setScale(scale: number);
   /**
    * @description: 设置绘图上下文

@@ -1,3 +1,11 @@
+/*
+ * @Author: XiaoWinter
+ * @Date: 2021-09-08 19:41:27
+ * @LastEditTime: 2021-09-11 12:18:35
+ * @LastEditors: your name
+ * @Description: 舞台的接口定义
+ * @FilePath: \engine\typings\stage.d.ts
+ */
 type Center = [number, number];
 type Observer = CoordAxis | Line;
 /**
@@ -27,9 +35,9 @@ interface Stage {
   // 缩放尺度
   scale: number;
   /**
-   * @member 原点与画布中新的偏移
+   * @member 原点与画布中新的偏移，我们使用向量来表示偏移
    */
-  originOffset: number[];
+  originOffset: Vector;
   /**
    * @description: 画布的中心点
    * @return {d2Point}
@@ -56,4 +64,7 @@ interface Stage {
    * @return {*}
    */
   notifyAll();
+
+  // 清除画布
+  clear(): void;
 }

@@ -24,7 +24,7 @@ export default class coordAxisImpl extends LineImpl implements CoordAxis {
     if (!ctx) return this;
     // 获取坐标范围
     const [width, height] = stage.center();
-    const [offsetX, offsetY] = stage.originOffset;
+    const [offsetX, offsetY] = stage.originOffset.value;
     const [minX, maxX] = [-width + offsetX, width + offsetX];
     const [minY, maxY] = [-height - offsetY, height - offsetY];
     // x [-width,width]
@@ -68,12 +68,12 @@ export default class coordAxisImpl extends LineImpl implements CoordAxis {
     if (!ctx) return this;
     // 获取坐标范围
     const [width, height] = stage.center();
-    const [offsetX, offsetY] = stage.originOffset;
+    const [offsetX, offsetY] = stage.originOffset.value;
     const [minX, maxX] = [-width + offsetX, width + offsetX].map((i) =>
-      parseInt("" + i / scale),
+      parseInt("" + i / scale)
     );
     const [minY, maxY] = [-height - offsetY, height - offsetY].map((i) =>
-      parseInt("" + i / scale),
+      parseInt("" + i / scale)
     );
     // x [-width,width]
     // 绘制x
@@ -140,8 +140,8 @@ export default class coordAxisImpl extends LineImpl implements CoordAxis {
   build() {
     this.setCtx({ strokeStyle: "blue" });
     this.generateAxis();
-    // this.generateRuling();
+    this.generateRuling();
     //
-    // this.generateGrid();
+    this.generateGrid();
   }
 }
