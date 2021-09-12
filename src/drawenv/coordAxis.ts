@@ -141,7 +141,6 @@ export default class coordAxisImpl extends LineImpl implements CoordAxis {
     this.setCtx({ strokeStyle: "blue" });
     this.generateAxis();
     this.generateRuling();
-    //
     this.generateGrid();
   }
 }

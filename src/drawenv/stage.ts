@@ -13,24 +13,23 @@ export default class StageImpl implements Stage {
   width = 0;
   observers: Observer[] = [];
   height = 0;
-  _originOffset: Vector;
+  _originOffset: Vector = new VectorImpl([0, 0]);
   // originOffset = [100, 100]
   // 原点偏移位置，按照标准坐标系
-  value: HTMLCanvasElement | null;
-  wrapper: HTMLDivElement | null;
-  ctx: CanvasRenderingContext2D | null;
+  value: HTMLCanvasElement | null = null;
+  wrapper: HTMLDivElement | null = null;
+  ctx: CanvasRenderingContext2D | null = null;
+  defaultOptions = {
+    parent: document.body,
+    id: "myCanvas"
+  };
   constructor(options?: Options) {
-    this.wrapper = null;
-    this.value = null;
-    this.ctx = null;
-    this._originOffset = new VectorImpl([0, 0]);
     options = {
-      parent: document.body,
-      id: "myCanvas",
+      ...this.defaultOptions,
       ...(options || {})
     };
+
     if (options.scale) this.scale = options.scale;
-    // this.scale = options.scale || 100;
     this.build(options);
   }
 
@@ -42,6 +41,7 @@ export default class StageImpl implements Stage {
     this.ctx?.translate(x * this.scale, y * this.scale);
     this._originOffset = vector;
   }
+
   build(options: Options) {
     const { size, parent, id } = options;
 

@@ -1,7 +1,7 @@
 /*
  * @Author: XiaoWinter
  * @Date: 2021-09-08 19:41:27
- * @LastEditTime: 2021-09-11 12:18:35
+ * @LastEditTime: 2021-09-12 00:31:39
  * @LastEditors: your name
  * @Description: 舞台的接口定义
  * @FilePath: \engine\typings\stage.d.ts
@@ -32,6 +32,7 @@ interface Stage {
 
   value: HTMLCanvasElement | null;
   ctx: CanvasRenderingContext2D | null;
+  defaultOptions: any;
   // 缩放尺度
   scale: number;
   /**

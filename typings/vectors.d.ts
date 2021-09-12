@@ -1,3 +1,11 @@
+/*
+ * @Author: XiaoWinter
+ * @Date: 2021-09-05 22:43:19
+ * @LastEditTime: 2021-09-12 01:13:33
+ * @LastEditors: your name
+ * @Description:
+ * @FilePath: \engine\typings\vectors.d.ts
+ */
 /**
  * @description: 向量
  * @param {*}
@@ -38,7 +46,7 @@ interface Vector {
    * @description: 点积；可以看作一种特殊（降维 ）的线性变换，这个线性变换和一个向量有关
    * @param {*}
    * @return {*}
-   * @eexample 一个向量到另一向量的投影，乘以另一向量
+   * @example 一个向量到另一向量的投影，乘以另一向量
    * |a|        |c|
    * | | dotted | | = ac+bd
    * |b|        |d|

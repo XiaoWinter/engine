@@ -1,7 +1,7 @@
 /*
  * @Author: XiaoWinter
  * @Date: 2021-09-08 19:41:27
- * @LastEditTime: 2021-09-11 12:19:21
+ * @LastEditTime: 2021-09-12 01:08:14
  * @LastEditors: your name
  * @Description: 线对象实现
  * @FilePath: \engine\src\drawenv\line.ts
@@ -11,13 +11,12 @@ export default class LineImpl implements Line {
   fx;
   fy;
   stage;
-  ctxOptions: CtxOptions;
+  ctxOptions: CtxOptions = {};
   constructor(fx: Fx | null, fy: Fx | null, stage: Stage) {
     this.fx = fx;
     this.fy = fy;
     this.stage = stage;
     this.stage.addObserver(this);
-    this.ctxOptions = {};
   }
 
   setScale(scale: number) {
@@ -86,39 +85,4 @@ export default class LineImpl implements Line {
 
     ctx.stroke();
   }
-  // drawX() {
-  //   const {ctx, scale} = this.stage
-  //   const [width, height] = this.stage.center()
-  //   const [offsetX, offsetY] = this.stage.originOffset.value
-  //   const min = -width + offsetX
-  //   const max = width + offsetX
-  //   if (!ctx || !this.fx) return
-
-  //   ctx.beginPath()
-  //   for (let i = min; i < max; i++) {
-  //     if (i === min) ctx.moveTo(i * scale, this.fx(i / scale))
-  //     const [x, y] = [i + 1, scale * this.fx((i + 1) / scale)]
-  //     ctx.lineTo(x, y)
-  //   }
-
-  //   ctx.stroke()
-  // }
-
-  // drawY() {
-  //   const {ctx, scale} = this.stage
-  //   const [width, height] = this.stage.center()
-  //   const [offsetX, offsetY] = this.stage.originOffset.value
-  //   const min = -height - offsetY
-  //   const max = height - offsetY
-  //   if (!ctx || !this.fy) return
-
-  //   ctx.beginPath()
-  //   for (let i = min; i < max; i++) {
-  //     if (i === min) ctx.moveTo(this.fy(i / scale), i * scale)
-  //     const [x, y] = [this.fy((i + 1) / scale) * scale, i + 1]
-  //     ctx.lineTo(x, y)
-  //   }
-
-  //   ctx.stroke()
-  // }
 }
