@@ -26,7 +26,6 @@ export default class LineImpl implements Line {
 
   setCtx(options: CtxOptions) {
     this.ctxOptions = Object.assign(this.ctxOptions, options);
-
     return this;
   }
 
@@ -38,16 +37,24 @@ export default class LineImpl implements Line {
   draw() {
     const { ctx } = this.stage;
     if (!ctx) return;
+    // console.log("line=================================");
 
-    let bucket = {};
+    let bucket: any = {};
 
-    for (const [key] of Object.keys(this.ctxOptions)) {
-      (bucket as any)[key] = ctx[key as ctxOptionsKeys];
+    for (const key of Object.keys(this.ctxOptions)) {
+      bucket[key] = ctx[key as ctxOptionsKeys];
     }
+
+    // console.log("bucket", bucket);
     Object.assign(ctx, this.ctxOptions);
+
+    // console.log("strokeStyle1", ctx.strokeStyle);
+
     this.drawX();
     this.drawY();
     Object.assign(ctx, bucket);
+    // console.log("strokeStyle2", ctx.strokeStyle);
+    // console.log("line++++++++++++++++++++++++++++++++++++");
   }
 
   drawX() {

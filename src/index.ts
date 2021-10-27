@@ -15,7 +15,7 @@ import UserEventImpl from "./drawenv/userEvent.js";
 
 const stage = new StageImpl();
 
-const userEvent = new UserEventImpl(stage);
+// const userEvent = new UserEventImpl(stage);
 
 // // 构建坐标系
 const coordAxis = new CoordAxisImpl(stage);
@@ -25,14 +25,16 @@ coordAxis.build();
 // er1.draw();
 
 // // 二次函数
-// const er2 = new LineImpl((x) => x * x, null, stage);
-// er2.draw();
+const er2 = new LineImpl((x) => x * x, null, stage);
+er2.setCtx({ strokeStyle: "red" });
+er2.draw();
 
-// // // sin;
-// const sin = new LineImpl((x) => Math.sin(x), null, stage);
-// sin.setCtx({ strokeStyle: "red" });
-// sin.draw();
+// // sin;
+const sin = new LineImpl((x) => Math.sin(x), null, stage);
+sin.setCtx({ strokeStyle: "purple" });
+sin.draw();
 
 // // // cos
-// const cos = new LineImpl((y) => Math.cos(y), null, stage);
-// cos.draw();
+const cos = new LineImpl((y) => Math.cos(y), null, stage);
+cos.setCtx({ strokeStyle: "yellow" });
+cos.draw();
